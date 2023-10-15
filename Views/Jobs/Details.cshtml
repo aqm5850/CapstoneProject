@@ -1,0 +1,73 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<script type="text/javascript">
+    $(document).ready(function () {
+        //tabbing off exerience field checks the skills of the job against 
+        // the experience of candidates
+        $("#error").hide();
+        $("#experience").on("focusout", function () {
+            var skills = $("#skills-container")[0].innerText;
+            var skillsarray = skills.split(", ");
+            var userExp = $(this).val();
+            var condition = [];
+            for (var i = 0; i < skillsarray.length; i++) {
+                var hasexperience = userExp.indexOf(skillsarray[i]) != -1;
+                condition.push(hasexperience);
+            }
+            if (condition.every(element => element === false)) {
+                $("#error").show();
+                $("#skills-description").append(skills);
+            }
+            else 
+            {
+                $("#submit").removeAttr("disabled");
+            }
+        })
+    });
+</script>
+@foreach(var job in ViewBag.Jobs)
+{
+    <h1>@job.jobTitle</h1>
+    <p id="description">@job.jobDescription</p>
+    <p>Skills Required: <span id="skills-container">@job.jobSkills</span></p>
+    <div id="form"></div>
+}
+<h2><strong>Apply Below<hr /></strong></h2>
+<form>
+<div class="form-group" style="width:100%">
+
+    <div style="float:left; width:50%">
+    <label for="CandidateName">First Name, Last Name:</label>
+    <input type="text" id="name" />
+    <br/>
+    <br />
+    <label for="phone">Phone number:</label>
+    <input type="text" id="phone" />
+        </div>
+        <div style="float:right; width:50%;">
+            <label for="email">Email:</label>
+            <input type="text" id="email" />
+            <br/>
+            <br/>
+            <label for="address">Address</label>
+            <textarea id="address" ></textarea>
+        </div>
+<hr />
+<div style="width:100%; clear:both">
+    <label for="experience">Experience</label>
+    <textarea id="experience" style="width:100%"></textarea>
+
+</div>
+<div id="error" style="width:100%;">
+<span style="color: red">You do not have the experience needed to apply for this position.</span><br />
+<span style="color:red">Consider gaining experience in the following skills: </span><span id="skills-description"></span>
+        </div>
+        <button id="submit" disabled>Submit Application</button>
+</div>
+</form>
