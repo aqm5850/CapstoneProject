@@ -15,6 +15,9 @@ namespace AutomatedRecruiter.Models
         public string CandidateState { get; set; }
         public string CandidateCity { get; set; }
         public string CandidateStreetAddress { get; set; }
+
+        public string CandidateEmail { get; set; }
+        public string CandidatePhoneNumber { get; set; }
        
     }
 
